@@ -1,0 +1,20 @@
+RoadMap
+------------------------------
+
+Version 0.1:
+	- Basic command interface
+	- Read commands from an updatable source
+
+Version 0.2:
+	- Basic commands:
+		- Tab control
+		- History control
+
+Version 0.3:
+	- Fuzzy searching of commands
+
+
+Version 1:
+	- Cross plugin commands
+	- Website commands
+		- Goto: lookup sitemap.xml and jump to webpages using fuzzy searching. ie. "goto home", would jump to the homepage. "goto blog", would jump to the blog

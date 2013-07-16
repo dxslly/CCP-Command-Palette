@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+		<title>WebCommand</title>
+		<link rel="stylesheet" href="style.css" type="text/css">
+		<link rel="stylesheet" href="reset.css" type="text/css">
+	</head>
+	<body>
+		<div id="container">
+			<div id="commandBar">
+				<input type="text" class="commandField" placeholder="Search or type a command">
+			</div>
+			<div id="commandSuggestions">
+				<a class="choice" data-command="commandNameHere">
+					<span class="command">Command Name</span>
+					<span class="description">A little description of the command</span>
+				</a>
+				<a class="choice selected" data-command="commandNameHere">
+					<span class="command">Command Name</span>
+					<span class="description">A little description of the command</span>
+				</a>
+				<a class="choice" data-command="commandNameHere">
+					<span class="command">Command Name</span>
+					<span class="description">A little description of the command</span>
+				</a>
+			</div>
+		</div>
+		<script type="text/javascript" src="popup.js"></script>
+		<script type="text/javascript" src="commands.js"></script>
+		<script type="text/javascript" src="fuse.js"></script>
+		<script type="text/javascript" src="jquery-min.js"></script>
+	</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "manifest_version": 2,
+
+  "name": "QuickTabs",
+  "description": "Switch tabs without using a mouse",
+  "version": "0.0.1",
+
+  "permissions": [
+    "tabs"
+  ],
+  
+  "browser_action": {
+    "default_popup": "popup.html"
+  }
+}
