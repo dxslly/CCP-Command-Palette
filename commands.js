@@ -1,7 +1,3 @@
-commands = [
-	newTab
-];
-
 /*
 Command Object:
 	slug - String: A short string representation with no spaces
@@ -11,13 +7,15 @@ Command Object:
 */
 
 var newTab = {
-	slug: 'newtab',
-	name: 'New Tab',
-	description: 'Opens and switches to a new tab',
-	functionCall: 'newTab'
+	'slug': 'newtab',
+	'name': 'New Tab',
+	'description': 'Opens and switches to a new tab',
+	'functionCall':  'newTabFunc'
 }
 
-function newTab(url) {
+commands = [newTab];
+
+function newTabFunc(url) {
 	var createProperties = {}
 	if (url)
 		createProperties.url = url;

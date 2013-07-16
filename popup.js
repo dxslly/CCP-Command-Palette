@@ -9,7 +9,7 @@ function callFunction(functionName, params) {
 var suggestionID = 'commandSuggestion';
 
 function populateSuggestions() {
-	var suggestions = $('#suggestions');
+	var suggestions = $('#commandSuggestions');
 
 	suggestions.empty();
 

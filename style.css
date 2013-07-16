@@ -19,14 +19,14 @@
 
 }
 
-.choice {
+.suggestion {
 	padding: 10px;
 	display: block;
 	font-family: "Lucida Console", Monaco, monospace;
 	border-bottom: 1px solid #aaa;
 }
 
-.choice:hover {
+.suggestion:hover {
 	background: #a9e4f7;
 	background: -moz-linear-gradient(top,  #a9e4f7 0%, #0fb4e7 100%);
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a9e4f7), color-stop(100%,#0fb4e7));
