@@ -13,7 +13,7 @@ var newTab = {
 	'functionCall':  'newTabFunc'
 }
 
-commands = [newTab];
+commands = [newTab,newTab,newTab];
 
 function newTabFunc(url) {
 	var createProperties = {}

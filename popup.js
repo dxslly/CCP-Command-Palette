@@ -5,9 +5,9 @@ function callFunction(functionName, params) {
 
 }
 
-
-var suggestionID = 'commandSuggestion';
-
+/*
+ * Clears and then fills the suggestions with possible suggestions
+ */
 function populateSuggestions() {
 	var suggestions = $('#commandSuggestions');
 
@@ -17,7 +17,7 @@ function populateSuggestions() {
 		var suggestion = $('<a>');
 		suggestion.addClass('suggestion');
 		suggestion.data('command', command.slug);
-		suggestion.append($('<span>').addClass('command').text(command.name));
+		suggestion.append($('<span>').addClass('command').text(command.name+':'));
 		suggestion.append($('<span>').addClass('description').text(command.description));
 		return suggestion;
 	}
@@ -27,3 +27,21 @@ function populateSuggestions() {
 		suggestions.append(suggestion);
 	};
 }
+
+
+/*
+ * Move focus to input on key down and repopulate suggestions
+ */
+$(document).ready(function(){
+	var previousInputValue = $('#commandField').val();
+	$('#commandField').focus();
+	$(document).on('keydown', function(e) {
+		$('#commandField').focus();
+	});
+	$(document).keypress(function(e) {
+		currentInputValue = $('#commandField').val();
+		if (previousInputValue != currentInputValue)
+			previousInputValue = currentInputValue;
+			populateSuggestions();
+	});
+})

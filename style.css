@@ -5,6 +5,7 @@
 #commandBar {
 	background-color: #ccc;
 	padding: 4px 12px 4px 12px;
+	border-bottom: 2px solid #aaaasdf;
 }
 
 #commandBar input {
@@ -35,6 +36,16 @@
 	background: -ms-linear-gradient(top,  #a9e4f7 0%,#0fb4e7 100%);
 	background: linear-gradient(to bottom,  #a9e4f7 0%,#0fb4e7 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a9e4f7', endColorstr='#0fb4e7',GradientType=0 );
+}
+
+.suggestion span {
+	margin-right: 1em;
+	display: inline;
+}
+
+.description {
+	font-style: italic;
+	font-variant: s
 }
 
 
