@@ -4,13 +4,9 @@ RoadMap
 Version 0.1:
 	- Basic command interface
 	- Read commands from an updatable source
-
-Version 0.2:
 	- Basic commands:
 		- Tab control
 		- History control
-
-Version 0.3:
 	- Fuzzy searching of commands
 
 

@@ -3,7 +3,7 @@
 
   "name": "WebCommand",
   "description": "Control your browser quickier than ever with only your keyboard",
-  "version": "0.0.1",
+  "version": "0.1",
 
   "commands": {
     "_execute_browser_action": {
