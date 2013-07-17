@@ -6,6 +6,7 @@ using only your keyboard.  Chrome has many shortcuts, but remembering them all c
 do these tasks without memorize every shortcut.
 
 1) Open WebCommand by pressing Ctrl+Shift+P
+
 2) Begin typing what you would like to do.
 
 Don't worry about typing everything perfectly.  WebCommand uses fuzzy searching so using only a few character is often
