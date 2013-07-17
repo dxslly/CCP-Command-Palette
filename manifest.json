@@ -17,7 +17,10 @@
   },
 
   "permissions": [
-    "tabs"
+    "tabs",
+    "browsingData",
+    "http://*/*",
+    "https://*/*"
   ],
   
   "browser_action": {

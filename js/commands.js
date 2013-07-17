@@ -6,6 +6,20 @@ Command Object:
 	functionCall - Function: The function that is called when the command is run
 */
 
+// DELETE CACHE
+var deleteCache = {
+	'package': 'Browsing Data',
+	'name': 'Delecte Cache',
+	'description': 'Removes all browsing ',
+	'slug': 'deleteCache',
+	'funcitonName': 'f_deleteCache'
+}
+
+function f_deleteCache() {
+	chrome.browsingData.removeCache({});
+}
+
+// OPEN ABOUT PAGE
 var about = {
 	'package': 'Help',
 	'name': 'About',
@@ -18,9 +32,22 @@ function f_about() {
 	chrome.tabs.create({'url': 'about.html'});
 }
 
+var print = {
+	'package': 'Help',
+	'name': 'Print',
+	'description': 'Prints The Current Page',
+	'slug': 'print',
+	'funcitonName': 'f_print',
+	'shortcut':'Super+P'
+}
+
+function f_print() {
+	chrome.tabs.update(null, {url: 'javascript:window.print();'});
+}
+
 var pluginTab = {
 	'package': 'Help',
-	'name': 'Open Popup in Tab',
+	'name': 'Open WebCommand in Tab',
 	'description': 'Opens the plugin in its own tab',
 	'slug': 'pluginTab',
 	'funcitonName': 'f_pluginTab'
@@ -62,8 +89,7 @@ var duplicateTab = {
 	'name': 'Duplicate Current',
 	'description': 'Duplicates the current tab',
 	'slug': 'duplicateTab',
-	'funcitonName': 'f_duplicateTab ',
-	'shortcut': 'Super+W'
+	'funcitonName': 'f_duplicateTab'
 }
 
 function f_duplicateTab() {
@@ -98,4 +124,14 @@ function f_reloadTab() {
 	chrome.tabs.reload();
 }
 
-commands = [about,pluginTab,test,duplicateTab,closeTab,openNewTab,reloadTab];
+commands = [
+	deleteCache,
+	about,
+	print,
+	pluginTab,
+	test,
+	duplicateTab,
+	closeTab,
+	openNewTab,
+	reloadTab
+];
