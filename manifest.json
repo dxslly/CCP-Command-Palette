@@ -1,9 +1,20 @@
 {
   "manifest_version": 2,
 
-  "name": "QuickTabs",
-  "description": "Switch tabs without using a mouse",
+  "name": "WebCommand",
+  "description": "Control your browser quickier than ever with only your keyboard",
   "version": "0.0.1",
+
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "windows": "Ctrl+Shift+P",
+        "mac": "Command+Shift+P",
+        "linux": "Ctrl+Shift+P"
+        },
+      "description": "Toggle WebCommand"
+    }
+  },
 
   "permissions": [
     "tabs"

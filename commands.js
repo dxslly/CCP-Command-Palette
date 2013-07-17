@@ -6,18 +6,44 @@ Command Object:
 	functionCall - Function: The function that is called when the command is run
 */
 
-var newTab = {
-	'slug': 'newtab',
-	'name': 'New Tab',
-	'description': 'Opens and switches to a new tab',
-	'functionCall':  'newTabFunc'
+var about = {
+	'slug': 'about',
+	'package': 'Help',
+	'name': 'About',
+	'description': 'Opens a helpful window',
+	'funcitonName': 'f_about'
 }
 
-commands = [newTab,newTab,newTab];
+function f_about() {
+	chrome.tabs.create({'url': 'about.html'});
+}
 
-function newTabFunc(url) {
-	var createProperties = {}
-	if (url)
-		createProperties.url = url;
-	chrome.tabs.create(createProperties);
+var openNewTab = {
+	'slug': 'openNewTab',
+	'package': 'Tab',
+	'name': 'Open New',
+	'description': 'Opens and switches to a new tab',
+	'funcitonName': 'f_openNewTab'
+}
+
+function f_openNewTab(url) {
+	chrome.tabs.create({});
+}
+
+var reloadTab = {
+	'slug': 'reloadTab',
+	'package': 'Tab',
+	'name': 'Reload',
+	'description': 'Reloads the current tab',
+	'funcitonName': 'f_reloadTab'
+}
+
+function f_reloadTab() {
+	chrome.tabs.reload();
+}
+
+commands = [about,openNewTab,reloadTab];
+
+function testFunction() {
+	console.log('Test funciton called');
 }
