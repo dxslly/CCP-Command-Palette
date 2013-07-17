@@ -79,8 +79,13 @@ var closeTab = {
 }
 
 function f_closeTab() {
-	chrome.tabs.getCurrent(function(tab) {
-		chrome.tabs.remove(tab.id);
+	chrome.windows.getCurrent({populate: true}, function(window) {
+		console.log(window);
+		for (var i = window.tabs.length - 1; i >= 0; i--) {
+			if (window.tabs[i].active) {
+				chrome.tabs.remove(window.tabs[i].id);
+			}
+		};
 	});
 }
 

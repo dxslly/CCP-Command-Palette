@@ -1,15 +1,19 @@
-var options = {
-	keys: ['package', 'name']
-}
-var commandsFuzzySearch = new Fuse(commands, options);
+var _currentfuzzySearch;
+var _currentSuggestions;
+var _currentCallBack;
 
 /*
- *Calls a function by a string and passes the params
+ * ask(arrayOfSuggestions, callBack(inputvalue:string) - optional)
  */
-function callFunction(functionName, params) {
-	window[functionName]();
+function ask(suggestions, callBack) {
+	var options = {
+		keys: ['name', 'description']
+	}
+	_currentfuzzySearch = new Fuse(suggestions, options);
+	_currentSuggestions = suggestions;
+	_currentCallBack = callBack;
+	populateSuggestions();
 }
-
 
 /*
  * Clears and then fills the suggestions with possible suggestions
@@ -19,40 +23,47 @@ function populateSuggestions() {
 
 	suggestions.empty();
 
-	function createSuggestion(command) {
+	function createHTMLSuggestion(suggestionObject) {
 		var suggestion = $('<a>');
 		suggestion.addClass('suggestion');
-		$(suggestion).data('slug', command.slug);
-		suggestion.append($('<span>').addClass('command').text(command.package + ': '));
-		suggestion.append($('<span>').addClass('description').text(command.name));
-		if (command.shortcut)
-			suggestion.append($('<span>').addClass('shortcut').text(command.shortcut));
+		$(suggestion).data('callBack', suggestionObject.callBack);
+		if (param)
+			$(suggestion).data('param', suggestionObject.param);
+		if (suggestionObject.image)
+			$(suggestion).append($('<img>').attr(suggestionObject.image).addClass('icon'));
+		suggestion.append($('<span>').addClass('name').text(suggestionObject.name));
+		if (suggestionObject.description) 
+			suggestion.append($('<span>').addClass('description').text(suggestionObject.description));
+		if (suggestionObject.shortcut)
+			suggestion.append($('<span>').addClass('shortcut').text(suggestionObject.shortcut));
 		return suggestion;
 	}
 
-	var commandFieldVal = $('#commandField').val();
-	if (commandFieldVal == '') {
-		for (var i = commands.length - 1; i >= 0; i--) {
-			var suggestion = createSuggestion(commands[i]);
-			suggestions.prepend(suggestion);
+	if (_currentSuggestions.length > 0) {
+		var commandFieldVal = $('#commandField').val();
+		if (commandFieldVal == '') {
+			for (var i = commands.length - 1; i >= 0; i--) {
+				var suggestion = createHTMLSuggestion(commands[i]);
+				suggestions.prepend(suggestion);
+			}
+		} else {
+			var results = _commandsFuzzySearch.search(commandFieldVal);
+			for (var j = results.length - 1; j >= 0; j--) {
+				var suggestion = createHTMLSuggestion(results[j]);
+				suggestions.prepend(suggestion);
+			};
 		}
-	} else {
-		var results = commandsFuzzySearch.search(commandFieldVal);
-		for (var j = results.length - 1; j >= 0; j--) {
-			var suggestion = createSuggestion(results[j]);
-			suggestions.prepend(suggestion);
-		};
+		$('.suggestion').first().addClass('selected');
 	}
-	$('.suggestion').first().addClass('selected');
 }
 
 /*
- * Runs the suggestion that is currently selected.  This defaults to the first.
+ * Runs the suggestion that is currently selected.
  */
 function runSelectedSuggestion() {
-	var slug = $('.selected').data('slug');
+	var callBack = $('.selected').data('callBack');
 	for (var i = commands.length - 1; i >= 0; i--) {
-		if (slug == commands[i].slug) {
+		if (callBack == commands[i].callBack) {
 			var params = [];
 			callFunction(commands[i].funcitonName, params);
 			break;
@@ -70,8 +81,21 @@ function selectSuggestion(suggestion) {
 	$(suggestion).addClass('selected');
 	$('body').stop(true);
 	$('body').animate({
-		scrollTop: $(suggestion).offset().top - (140)
-	}, 100);
+		scrollTop: $(suggestion).offset().top - (140) // EVIL MAGIC!!
+	}, 100); 
+}
+
+
+function onSubmit() {
+	var selected = $('.selected');
+	if (selected) {
+		var callBack = $(selected).data('callBack');
+		var params = $(selected).data('params');
+		callFunctionFromStr(callBack, params);
+	}
+	if ()
+	callFunctionFromStr
+
 }
 
 
@@ -123,3 +147,14 @@ $(document).ready(function(){
 		runSelectedSuggestion();
 	});
 });
+
+/*
+ * UTILITY
+ */
+
+/*
+ *Calls a function by a string and passes the params
+ */
+function callFunctionFromStr(functionName, params) {
+	window[functionName]();
+}

@@ -14,3 +14,12 @@ Version 1:
 	- Cross plugin commands
 	- Website commands
 		- Goto: lookup sitemap.xml and jump to webpages using fuzzy searching. ie. "goto home", would jump to the homepage. "goto blog", would jump to the blog
+
+
+
+two modes of input:
+	- suggestion
+	- raw
+
+
+ask(arrayOfSuggestions, callBack(inputvalue:string) - optional)

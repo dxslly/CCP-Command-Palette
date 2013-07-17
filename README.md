@@ -20,3 +20,12 @@ commands.
 
 
 If you are interested in helping with WebCommand please send me a message.
+
+
+Suggestion Object:
+	Name - string
+	image - string - optional
+	description - string - optional
+	shortcut - {windows - string, mac - string, linux - string} - optional
+	callBack - function
+	param - string - optional
