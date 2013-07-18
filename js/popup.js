@@ -1,160 +1,218 @@
+/* ==============================================================================
+ *     CONSTANTS
+ * ==============================================================================
+ */
+ var OS = {
+	'unknown': 0,
+	'mac': 1,
+	'windows': 2,
+	'linux': 3
+}
+
+/* ==============================================================================
+ *     VARIABLES
+ * ==============================================================================
+ */
 var _currentfuzzySearch;
 var _currentSuggestions;
 var _currentCallBack;
+var _os = detectOS();
+
+/* ==============================================================================
+ *     FUNCTIONS
+ * ==============================================================================
+ */
 
 /*
+ * Repopulates the suggestions with 
  * ask(arrayOfSuggestions, callBack(inputvalue:string) - optional)
  */
-function ask(suggestions, callBack) {
+function askUser(suggestions, prompt, callBack) {
 	var options = {
-		keys: ['name', 'description']
+		keys: ['caption']
 	}
 	_currentfuzzySearch = new Fuse(suggestions, options);
 	_currentSuggestions = suggestions;
-	_currentCallBack = callBack;
+	// @TODO: add prompt code and html
+	_currentCallBack = callBack || null;
 	populateSuggestions();
+}
+
+/*
+ * Called when the user chooses a suggestion or if not suggestions are given
+ * when the user presses enter. 
+ */
+function onUserChoice() {
+	var selected = $('.selected');
+	if (selected) {
+		var command = $(selected).data('command');
+		var params = $(selected).data('params');
+		callFunctionFromStr(command, params);
+	}
+	if (_currentCallBack)
+		_currentCallBack($('#commandField').val());
 }
 
 /*
  * Clears and then fills the suggestions with possible suggestions
  */
 function populateSuggestions() {
-	var suggestions = $('#suggestions');
+	var suggestionsElement = $('#suggestions');
 
-	suggestions.empty();
+	suggestionsElement.empty();
 
+	/*
+	 * Creates a HTML element given a suggestion
+	 *
+	 * params:
+	 *   suggestionObject - suggestion
+	 * return:
+	 *   element - A suggestion HTML element 
+	 */
 	function createHTMLSuggestion(suggestionObject) {
 		var suggestion = $('<a>');
 		suggestion.addClass('suggestion');
-		$(suggestion).data('callBack', suggestionObject.callBack);
-		if (param)
-			$(suggestion).data('param', suggestionObject.param);
+		$(suggestion).data('command', suggestionObject.command);
+		if (suggestionObject.args)
+			$(suggestion).data('args', suggestionObject.args);
 		if (suggestionObject.image)
 			$(suggestion).append($('<img>').attr(suggestionObject.image).addClass('icon'));
-		suggestion.append($('<span>').addClass('name').text(suggestionObject.name));
+		suggestion.append($('<span>').addClass('caption').text(suggestionObject.caption));
 		if (suggestionObject.description) 
 			suggestion.append($('<span>').addClass('description').text(suggestionObject.description));
-		if (suggestionObject.shortcut)
-			suggestion.append($('<span>').addClass('shortcut').text(suggestionObject.shortcut));
+		if (suggestionObject.shortcut) {
+			var shortcutElement = $('<span>').addClass('shortcut');
+			var shortcutKeys;
+			switch(_os) {
+				case OS.mac:
+					shortcutKeys = suggestionObject.shortcut.windows;
+				case OS.windows:
+					shortcutKeys = suggestionObject.shortcut.windows;
+				case OS.linux:
+					shortcutKeys = suggestionObject.shortcut.windows;
+				default:
+					shortcutKeys = suggestionObject.shortcut.windows;
+			}
+			for (var i = 0; i < shortcutKeys.length; i++) {
+				$(shortcutElement).append($('<span>').text(shortcutKeys[i]).addClass('key'));
+				if (i != shortcutKeys.length - 1)
+					$(shortcutElement).append('+');
+			};
+			suggestion.append(shortcutElement);
+		}
 		return suggestion;
 	}
 
-	if (_currentSuggestions.length > 0) {
-		var commandFieldVal = $('#commandField').val();
-		if (commandFieldVal == '') {
-			for (var i = commands.length - 1; i >= 0; i--) {
-				var suggestion = createHTMLSuggestion(commands[i]);
-				suggestions.prepend(suggestion);
-			}
-		} else {
-			var results = _commandsFuzzySearch.search(commandFieldVal);
-			for (var j = results.length - 1; j >= 0; j--) {
-				var suggestion = createHTMLSuggestion(results[j]);
-				suggestions.prepend(suggestion);
-			};
+	// The value of the input ignoring bad characters
+	var commandFieldVal = $('#commandField').val().replace(/\W/g, '');
+	// If the input field is empty
+	if (commandFieldVal == '') {
+		// Fill with every suggestion
+		for (var i = _currentSuggestions.length - 1; i >= 0; i--) {
+			var suggestion = createHTMLSuggestion(_currentSuggestions[i]);
+			suggestionsElement.prepend(suggestion);
 		}
-		$('.suggestion').first().addClass('selected');
+		if (_currentSuggestions.length > 0)
+			$('.suggestion').first().addClass('selected');
+	} else {
+		// Fuzzy search for results Fill with results
+		var results = _currentfuzzySearch.search(commandFieldVal);
+		for (var i = results.length - 1; i >= 0; i--) {
+			var suggestion = createHTMLSuggestion(results[i]);
+			suggestionsElement.prepend(suggestion);
+		};
+		if (results.length > 0)
+			$('.suggestion').first().addClass('selected');
 	}
 }
 
-/*
- * Runs the suggestion that is currently selected.
- */
-function runSelectedSuggestion() {
-	var callBack = $('.selected').data('callBack');
-	for (var i = commands.length - 1; i >= 0; i--) {
-		if (callBack == commands[i].callBack) {
-			var params = [];
-			callFunction(commands[i].funcitonName, params);
-			break;
-		}
-	};
-}
 
 /*
- * Deselect any suggestions then selects the given suggestions.
- * Scrolls to show selection.
+ * Deselect any current suggestions, selects a given suggestions.
+ * and then scrolls to show selection.
  */
-function selectSuggestion(suggestion) {
+function selectSuggestion(suggestionElement) {
 	var selected =  $('.selected');
 	$(selected).removeClass('selected');
-	$(suggestion).addClass('selected');
+	$(suggestionElement).addClass('selected');
 	$('body').stop(true);
 	$('body').animate({
-		scrollTop: $(suggestion).offset().top - (140) // EVIL MAGIC!!
+		scrollTop: $(suggestionElement).offset().top - (140) // EVIL MAGIC!!
 	}, 100); 
 }
 
 
-function onSubmit() {
-	var selected = $('.selected');
-	if (selected) {
-		var callBack = $(selected).data('callBack');
-		var params = $(selected).data('params');
-		callFunctionFromStr(callBack, params);
-	}
-	if ()
-	callFunctionFromStr
-
-}
-
-
 /*
- * Move focus to input on key down and repopulate suggestions
+ *  DOM Ready
  */
 $(document).ready(function(){
-	// Vars
-	var previousInputValue = $('#commandField').val();
-	
-	// Run at start
+
+	// Bring focus to the input box, to make the user feel safe
 	$('#commandField').focus();
-	populateSuggestions();
+	// Ask user about command suggestions 
+	askUser(getCommandSuggestions());
 	
-	// Events
+	$('#commandField').on('input', function() {
+		populateSuggestions();
+	})
+
+	// On keydown
 	$(document).on('keydown', function(e) {
 		$('#commandField').focus();
 		var selected =  $('.selected');
 		if (e.which == 40 || e.which == 9) { // if down arrow or tab
+			e.preventDefault();
 			var next = (selected).next('.suggestion');
 			if (next.length != 0) {
 				selectSuggestion(next);
+			} else {
+				var first = $('.suggestion').first();
+				if (first)
+					selectSuggestion(first);
 			}
 		} else if (e.which == 38) { // if up arrow
+			e.preventDefault();
 			var prev = (selected).prev('.suggestion');
 			if (prev.length != 0) {
 				selectSuggestion(prev);
+			} else {
+				var last = $('.suggestion').last();
+				if (last)
+					selectSuggestion(last);
 			}
 		} else if (e.which == 13) { // if enter
-			runSelectedSuggestion();
+			onUserChoice();
 		}
 	});
 	
-	$(document).keypress(function(e) {
-		currentInputValue = $('#commandField').val();
-		if (previousInputValue != currentInputValue)
-			previousInputValue = currentInputValue;
-			populateSuggestions();
-	});
-
-	$(document).keyup(function(e) {
-		if (e.which == 8) // if backspace
-			populateSuggestions();
-	})
-	
+	// On Click
 	$('.suggestion').click(function(e) {
 		$('.suggestion').removeClass('selected')
 		$(this).closest('.suggestion').addClass('selected');
-		runSelectedSuggestion();
+		onUserChoice();
 	});
 });
 
-/*
- * UTILITY
+/* ==============================================================================
+ *     UTILITY FUNCTIONS
+ * ==============================================================================
  */
 
 /*
- *Calls a function by a string and passes the params
+ * Calls a function given the funciton's name
  */
 function callFunctionFromStr(functionName, params) {
-	window[functionName]();
+	params = params || {};
+	window[functionName](params);
+}
+
+/*
+ * Returns the believed Operating System of the user
+ */
+function detectOS() {
+	if (navigator.appVersion.indexOf("Win")!=-1) return OS.windows;
+	if (navigator.appVersion.indexOf("Mac")!=-1) return OS.mac;
+	if (navigator.appVersion.indexOf("X11")!=-1) return OS.linux;
+	if (navigator.appVersion.indexOf("Linux")!=-1) return OS.linux;
+	return OS.unknown;
 }

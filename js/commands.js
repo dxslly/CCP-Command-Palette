@@ -1,84 +1,37 @@
 /*
-Command Object:
-	slug - String: A short string representation with no spaces
-	name - String: A full string of the command's name
-	description - String: A brief description of what the command does
-	functionCall - Function: The function that is called when the command is run
+	Suggestion Object:
+		caption - string
+		command:string
+		args:obj - optional
+		image:string - optional
+		description:string - optional
+		shortcut:{windows:[string], mac:[string], linux:[string]} - optional
 */
 
-// DELETE CACHE
-var deleteCache = {
-	'package': 'Browsing Data',
-	'name': 'Delecte Cache',
-	'description': 'Removes all browsing ',
-	'slug': 'deleteCache',
-	'funcitonName': 'f_deleteCache'
-}
+// Suggestions
 
-function f_deleteCache() {
-	chrome.browsingData.removeCache({});
-}
+_suggestions = [
+	{ 'caption': 'About', 'command': 'openNewTab', 'args': {'url': 'about.html'} },
+	{ 'caption': 'Browser Data: Delecte Cache', 'command': 'deleteCache', 'shortcut': {'windows': ['Ctrl','Shift','Delete']} },
+	{ 'caption': 'Debug: Open WebCommand in Tab', 'command': 'openNewTab', 'args': {'url': 'popup.hmtl'} },
+	{ 'caption': 'Tab: Close Current', 'command': 'closeCurrentTab', 'shortcut': {'windows': ['Ctrl','W'], 'mac': ['⌘','W']} },
+	{ 'caption': 'Tab: Duplicate Current', 'command': 'duplicateCurrentTab' },
+	{ 'caption': 'Tab: Open New', 'command': 'openNewTab', 'shortcut': {'windows': ['Ctrl','T'], 'mac': ['⌘','T']} },
+	{ 'caption': 'Tab: Reload Current',	'command': 'reloadCurrentTab', 'shortcut': {'windows': ['Ctrl','R'], 'mac': ['⌘','R']} },
+	{ 'caption': 'Page: Print', 'command': 'printPage', 'shortcut': {'windows': ['Ctrl','P'], 'mac': ['⌘','P']} }
+];
 
-// OPEN ABOUT PAGE
-var about = {
-	'package': 'Help',
-	'name': 'About',
-	'description': 'Opens a helpful window',
-	'slug': 'about',
-	'funcitonName': 'f_about'
-}
+// Functions
 
-function f_about() {
-	chrome.tabs.create({'url': 'about.html'});
-}
-
-var print = {
-	'package': 'Help',
-	'name': 'Print',
-	'description': 'Prints The Current Page',
-	'slug': 'print',
-	'funcitonName': 'f_print',
-	'shortcut':'Super+P'
-}
-
-function f_print() {
+function printPage() {
 	chrome.tabs.update(null, {url: 'javascript:window.print();'});
 }
 
-var pluginTab = {
-	'package': 'Help',
-	'name': 'Open WebCommand in Tab',
-	'description': 'Opens the plugin in its own tab',
-	'slug': 'pluginTab',
-	'funcitonName': 'f_pluginTab'
-}
-
-function f_pluginTab() {
-	chrome.tabs.create({'url': 'popup.html'});
-}
-
-var test = {
-	'package': 'Help',
-	'name': 'Test',
-	'description': 'Prints to console',
-	'slug': 'test',
-	'funcitonName': 'f_reloadTab'
-}
-
-function testFunction() {
+function log(obj) {
 	console.log('Test funciton called');
 }
 
-var closeTab = {
-	'package': 'Tab',
-	'name': 'Close Current',
-	'description': 'Closes the current tab',
-	'slug': 'closeTab',
-	'funcitonName': 'f_closeTab',
-	'shortcut': 'Super+W'
-}
-
-function f_closeTab() {
+function closeCurrentTab() {
 	chrome.windows.getCurrent({populate: true}, function(window) {
 		console.log(window);
 		for (var i = window.tabs.length - 1; i >= 0; i--) {
@@ -89,54 +42,25 @@ function f_closeTab() {
 	});
 }
 
-var duplicateTab = {
-	'package': 'Tab',
-	'name': 'Duplicate Current',
-	'description': 'Duplicates the current tab',
-	'slug': 'duplicateTab',
-	'funcitonName': 'f_duplicateTab'
-}
-
-function f_duplicateTab() {
+function duplicateCurrentTab() {
 	chrome.tabs.getCurrent(function(tab) {
 		chrome.tabs.duplicate(tab.id);
 	});
 }
 
-var openNewTab = {
-	'package': 'Tab',
-	'name': 'Open New',
-	'description': 'Opens and switches to a new tab',
-	'slug': 'openNewTab',
-	'funcitonName': 'f_openNewTab',
-	'shortcut': 'Super+T'
-}
-
-function f_openNewTab(url) {
-	chrome.tabs.create({});
-}
-
-var reloadTab = {
-	'package': 'Tab',
-	'name': 'Reload',
-	'description': 'Reloads the current tab',
-	'slug': 'reloadTab',
-	'funcitonName': 'f_reloadTab',
-	'shortcut': 'Super+R'
-}
-
-function f_reloadTab() {
+function reloadCurrentTab() {
 	chrome.tabs.reload();
 }
 
-commands = [
-	deleteCache,
-	about,
-	print,
-	pluginTab,
-	test,
-	duplicateTab,
-	closeTab,
-	openNewTab,
-	reloadTab
-];
+function deleteCache() {
+	chrome.browsingData.removeCache({});
+}
+
+
+function openNewTab(obj) {
+	chrome.tabs.create(obj);
+}
+
+function getCommandSuggestions() {
+	return _suggestions;
+}

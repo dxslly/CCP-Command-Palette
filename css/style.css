@@ -8,8 +8,8 @@ body {
 }
 
 #container {
-	min-width: 320px;
-	max-height: 525px;
+	min-width: 500px;
+	max-height: 250px;
 }
 
 #commandBar {
@@ -19,7 +19,9 @@ body {
 	right: 0;
 	background-color: #ccc;
 	padding: 4px 12px 4px 12px;
-	border-bottom: 2px solid #aaaasdf;
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+	border-bottom: 2px solid #8B8B8B;
 }
 
 #commandBar input {
@@ -35,13 +37,14 @@ body {
 }
 
 #suggestions {
-	margin-top: 35px;
+	margin-top: 40px;
 	font-size: 16px;
 	font-family: Arial, Helvetica, sans-serif;
 }
 
 .suggestion {
 	display: block;
+	white-space: nowrap;
 	text-align: left;
 	vertical-align: center;
 	padding: 9px 14px 9px 14px;
@@ -65,21 +68,25 @@ body {
 }
 
 .icon {
-
+	
 }
 
-.name {
-
-}
-
-.description {
-	/*font-style: italic;*/
+.caption{
+	
 }
 
 .shortcut {
+	margin-left: 20px;
 	float: right;
 }
 
+.key {
+	border-radius: 4px;
+	border-style: outset;
+	border: 1px solid #aaa;
+	background: #fafafa;
+	padding: 0px 3px 1px 3px;
+}
 
 .selected {
 	background: rgb(255,197,120);
