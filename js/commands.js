@@ -13,7 +13,7 @@
 _suggestions = [
 	{ 'caption': 'About', 'command': 'openNewTab', 'args': {'url': 'about.html'} },
 	{ 'caption': 'Browser Data: Delete Cache', 'command': 'deleteCache', 'shortcut': {'windows': ['Ctrl','Shift','Delete']} },
-	{ 'caption': "Debug: Echo Value", 'command': 'askForEchoValue'},
+	{ 'caption': "Debug: Echo Value", 'command': 'askForEchoValue' },
 	{ 'caption': 'Debug: Open WebCommand in Tab', 'command': 'openNewTab', 'args': {'url': 'popup.html'} },
 	{ 'caption': 'Goto: Downloads', 'command': 'openNewTab', 'args': {'url': 'chrome://downloads/'}, 'shortcut': {'windows': ['Ctrl','Shift','J'], 'mac': ['⌘','Shift','J']} },
 	{ 'caption': 'Goto: Extentions', 'command': 'openNewTab', 'args': {'url': 'chrome://extensions/'} },
