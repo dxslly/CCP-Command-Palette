@@ -21,6 +21,8 @@ var _currentCallBack;
 var _os = detectOS();
 
 
+
+
 /* ==============================================================================
  *     FUNCTIONS
  * ==============================================================================
@@ -168,14 +170,22 @@ function populateSuggestions() {
  * and then scrolls to show selection.
  */
 function selectSuggestion(suggestionElement) {
-	var selected =  $('.selected');
-	$(selected).removeClass('selected');
+	$('.selected').removeClass('selected');
 	$(suggestionElement).addClass('selected');
-	$('#container').stop(true);
-	// EVIL MAGIC!!
-	$('#container').animate({
-		scrollTop: $(suggestionElement).offset().top - 140
-	}, 100);
+	
+	/* Scroll suggestion into view */
+	$('#suggestions').stop(true); // Stop any current animations
+	var offset = $(suggestionElement).position().top; // Suggestion's offset from parent
+	var suggestionHeight = $(suggestionElement).outerHeight();
+	var suggestionsHeight = $('#suggestions').height();
+	var suggestionsScrollTop = $('#suggestions').scrollTop();
+	if (offset + suggestionHeight > suggestionsHeight) { // If element is beneath view
+		offset += suggestionsScrollTop - (suggestionsHeight - suggestionHeight);
+		$('#suggestions').animate({ scrollTop: offset }, 100);
+	} else if (offset < 0) { // If element is above view
+		offset += suggestionsScrollTop;
+		$('#suggestions').animate({ scrollTop: offset }, 100);
+	}
 }
 
 
@@ -205,7 +215,7 @@ $(document).ready(function(){
 					selectSuggestion(next);
 				} else {
 					var first = $('.suggestion').first();
-					if (first)
+					if (first.length != 0)
 						selectSuggestion(first);
 				}
 			} else if (e.which == 38) { // if up arrow
@@ -215,7 +225,7 @@ $(document).ready(function(){
 					selectSuggestion(prev);
 				} else {
 					var last = $('.suggestion').last();
-					if (last)
+					if (last.length != 0)
 						selectSuggestion(last);
 				}
 			}

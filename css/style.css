@@ -1,4 +1,5 @@
 body {
+	background-color: transparent;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
@@ -7,17 +8,60 @@ body {
 	user-select: none;
 }
 
+/* SCROLL BAR */
+/* Turn on a 16x16 scrollbar */
+::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+}
+
+/* Turn on single button up on top, and down on bottom */
+::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment {
+    display: block;
+}
+
+/* Turn off the down area up on top, and up area on bottom */
+::-webkit-scrollbar-button:vertical:start:increment,
+::-webkit-scrollbar-button:vertical:end:decrement {
+    display: none;
+}
+
+/* Place The scroll down button at the bottom */
+::-webkit-scrollbar-button:end:increment {
+    background-image: url(../images/scroll_cntrl_dwn.png);
+}
+
+/* Place The scroll up button at the up */
+::-webkit-scrollbar-button:start:decrement {
+    background-image: url(../images/scroll_cntrl_up.png);
+}
+
+/* Top area above thumb and below up button */
+::-webkit-scrollbar-track-piece:vertical:start {
+    background-image: url(../images/scroll_gutter_top.png), url(../images/scroll_gutter_mid.png);
+    background-repeat: no-repeat, repeat-y;
+}
+
+/* Bottom area below thumb and down button */
+::-webkit-scrollbar-track-piece:vertical:end {
+    background-image: url(../images/scroll_gutter_btm.png), url(../images/scroll_gutter_mid.png);
+    background-repeat: no-repeat, repeat-y;
+    background-position: bottom left, 0 0;
+}
+
+/* The thumb itself */
+::-webkit-scrollbar-thumb:vertical {
+    height: 56px;
+    -webkit-border-image: url(../images/scroll_thumb.png) 8 0 8 0 stretch stretch;
+    border-width: 8 0 8 0;
+}
+
 #container {
 	min-width: 500px;
-	max-height: 250px;
-	overflow: scroll;
 }
 
 #commandBar {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
 	background-color: #ccc;
 	padding: 4px 12px 4px 12px;
 	border-top-left-radius: 2px;
@@ -37,12 +81,15 @@ body {
 }
 
 #suggestions {
-	margin-top: 40px;
+	position: relative;
 	font-size: 16px;
 	font-family: Arial, Helvetica, sans-serif;
+	max-height: 250px;
+	overflow-y: scroll;
 }
 
 .suggestion {
+	position: relative;
 	display: block;
 	white-space: nowrap;
 	text-align: left;
