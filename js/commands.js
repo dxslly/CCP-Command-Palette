@@ -25,6 +25,7 @@ _suggestions = [
 	{ 'caption': 'Tab: Duplicate Current', 'command': 'duplicateCurrentTab' },
 	{ 'caption': 'Tab: Open New', 'command': 'openNewTab', 'shortcut': {'windows': ['Ctrl','T'], 'mac': ['⌘','T']} },
 	{ 'caption': 'Tab: Reload Current',	'command': 'reloadCurrentTab', 'shortcut': {'windows': ['Ctrl','R'], 'mac': ['⌘','R']} },
+	{ 'caption': 'Tab: Toggle Pin',	'command': 'toggleTabPin' },
 	{ 'caption': 'Window: Open New', 'command': 'createWindow', 'shortcut': {'windows': ['Ctrl','N'], 'mac': ['⌘','N']} }
 ];
 
@@ -70,18 +71,34 @@ function log(obj) {
 	console.log(obj);
 }
 
-function closeCurrentTab() {
+function getCurrentTab(callBack) {
 	chrome.windows.getCurrent({populate: true}, function(window) {
 		console.log(window);
 		for (var i = window.tabs.length - 1; i >= 0; i--) {
 			if (window.tabs[i].active)
-				chrome.tabs.remove(window.tabs[i].id);
+				if (callBack)
+					callBack(window.tabs[i]);
 		};
 	});
 }
 
+function closeCurrentTab() {
+	getCurrentTab(function(tab) {
+		chrome.tabs.remove(tab.id);
+	});
+}
+
+function toggleTabPin() {
+	getCurrentTab(function(tab) {
+		if (tab.pinned)
+			chrome.tabs.update(tab.id, { 'pinned': false });
+		else
+			chrome.tabs.update(tab.id, { 'pinned': true });
+	});
+}
+
 function duplicateCurrentTab() {
-	chrome.tabs.getCurrent(function(tab) {
+	getCurrentTab(function(tab) {
 		chrome.tabs.duplicate(tab.id);
 	});
 }
