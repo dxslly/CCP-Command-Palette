@@ -174,16 +174,17 @@ function selectSuggestion(suggestionElement) {
 	$(suggestionElement).addClass('selected');
 	
 	/* Scroll suggestion into view */
-	$('#suggestions').stop(true); // Stop any current animations
 	var offset = $(suggestionElement).position().top; // Suggestion's offset from parent
 	var suggestionHeight = $(suggestionElement).outerHeight();
 	var suggestionsHeight = $('#suggestions').height();
 	var suggestionsScrollTop = $('#suggestions').scrollTop();
 	if (offset + suggestionHeight > suggestionsHeight) { // If element is beneath view
 		offset += suggestionsScrollTop - (suggestionsHeight - suggestionHeight);
+		$('#suggestions').stop(true); // Stop any current animations
 		$('#suggestions').animate({ scrollTop: offset }, 100);
 	} else if (offset < 0) { // If element is above view
 		offset += suggestionsScrollTop;
+		$('#suggestions').stop(true); // Stop any current animations
 		$('#suggestions').animate({ scrollTop: offset }, 100);
 	}
 }
