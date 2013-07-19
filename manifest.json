@@ -24,6 +24,7 @@
   ],
   
   "browser_action": {
+    "default_title": "WebCommand",
     "default_popup": "popup.html"
   }
 }
