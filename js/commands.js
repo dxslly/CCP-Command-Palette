@@ -20,8 +20,9 @@ _suggestions = [
 	{ 'caption': 'Goto: History', 'command': 'openNewTab', 'args': {'url': 'chrome://history/'}, 'shortcut': {'windows': ['Ctrl','H'], 'mac': ['⌘','H']}},
 	{ 'caption': 'Goto: Settings', 'command': 'openNewTab', 'args': {'url': 'chrome://settings/'} },
 	{ 'caption': 'Page: Print', 'command': 'printPage', 'shortcut': {'windows': ['Ctrl','P'], 'mac': ['⌘','P']} },
-	{ 'caption': 'Tab: Switch To', 'command': 'suggestTabs' },
+	{ 'caption': 'Tab: Switch To ___', 'command': 'suggestTabs' },
 	{ 'caption': 'Tab: Close Current', 'command': 'closeCurrentTab', 'shortcut': {'windows': ['Ctrl','W'], 'mac': ['⌘','W']} },
+	{ 'caption': 'Tab: Close All Others', 'command': 'closeAllOtherTabs' },
 	{ 'caption': 'Tab: Duplicate Current', 'command': 'duplicateCurrentTab' },
 	{ 'caption': 'Tab: Open New', 'command': 'openNewTab', 'shortcut': {'windows': ['Ctrl','T'], 'mac': ['⌘','T']} },
 	{ 'caption': 'Tab: Reload Current',	'command': 'reloadCurrentTab', 'shortcut': {'windows': ['Ctrl','R'], 'mac': ['⌘','R']} },
@@ -71,9 +72,18 @@ function log(obj) {
 	console.log(obj);
 }
 
+function closeAllOtherTabs() {
+	chrome.windows.getCurrent({populate: true}, function(window) {
+		for (var i = window.tabs.length - 1; i >= 0; i--) {
+			var currentTab = window.tabs[i];
+			if (!currentTab.pinned && !currentTab.active)
+				chrome.tabs.remove(window.tabs[i].id);
+		};
+	});
+}
+
 function getCurrentTab(callBack) {
 	chrome.windows.getCurrent({populate: true}, function(window) {
-		console.log(window);
 		for (var i = window.tabs.length - 1; i >= 0; i--) {
 			if (window.tabs[i].active)
 				if (callBack)
