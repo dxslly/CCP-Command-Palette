@@ -68,15 +68,18 @@ function askUser(placeholder, callBack) {
  * when the user presses enter. 
  */
 function onUserChoice() {
+	var selected = $('.selected');
+
 	if (_currentCallBack) {
 		_currentCallBack($('#commandField').val());
 	} else {
-		var selected = $('.selected');
 		var command = $(selected).data('command');
 		var args = $(selected).data('args');
 		callFunctionFromStr(command, args);
 	}
-	// window.close();
+
+	if ($(selected).data('closeOnComplete'))
+		window.close();
 }
 
 /*
@@ -99,18 +102,32 @@ function populateSuggestions() {
 		function createHTMLSuggestion(suggestionObject) {
 			var suggestion = $('<a>');
 			suggestion.addClass('suggestion');
+
+			// Data
 			$(suggestion).data('command', suggestionObject.command);
 			if (suggestionObject.args)
 				$(suggestion).data('args', suggestionObject.args);
+			if (suggestionObject.closeOnComplete)
+				$(suggestion).data('closeOnComplete', suggestionObject.closeOnComplete)
+			else
+				$(suggestion).data('closeOnComplete', false)
+
+			// Image
 			if (suggestionObject.image) {
 				var imgElement = $('<img>');
 				$(imgElement).addClass('icon');
 				$(imgElement).attr('src', suggestionObject.image);
 				$(suggestion).append(imgElement);
 			}
+
+			// Caption
 			suggestion.append($('<span>').addClass('caption').text(suggestionObject.caption));
+			
+			// Desciption
 			if (suggestionObject.description) 
 				suggestion.append($('<span>').addClass('description').text(suggestionObject.description));
+			
+			// Shortcut
 			if (suggestionObject.shortcut) {
 				var shortcutElement = $('<span>').addClass('shortcut');
 				var shortcutKeys;
@@ -131,8 +148,8 @@ function populateSuggestions() {
 				if (shortcutKeys) {
 					for (var i = 0; i < shortcutKeys.length; i++) {
 						$(shortcutElement).append($('<span>').text(shortcutKeys[i]).addClass('key'));
-						if (i != shortcutKeys.length - 1)
-							$(shortcutElement).append('+');
+						// if (i != shortcutKeys.length - 1)
+						// 	$(shortcutElement).append('+');
 					};
 					suggestion.append(shortcutElement);
 				}
@@ -150,7 +167,7 @@ function populateSuggestions() {
 				suggestionsElement.prepend(suggestion);
 			}
 			if (_currentSuggestions.length > 0)
-				$('.suggestion').first().addClass('selected');
+				selectSuggestion($('.suggestion').first());
 		} else {
 			// Fuzzy search for results Fill with results
 			var results = _currentFuzzySearch.search(commandFieldVal);
@@ -159,7 +176,7 @@ function populateSuggestions() {
 				suggestionsElement.prepend(suggestion);
 			};
 			if (results.length > 0)
-				$('.suggestion').first().addClass('selected');
+				selectSuggestion($('.suggestion').first());
 		}
 	}
 }
@@ -209,7 +226,7 @@ $(document).ready(function(){
 		$('#commandField').focus();
 		var selected =  $('.selected');
 		if (selected) {
-			if (e.which == 40 || e.which == 9) { // if down arrow or tab
+			if (e.which == 40 || e.which == 9) { // Down arrow and Tab Keycodes
 				e.preventDefault();
 				var next = (selected).next('.suggestion');
 				if (next.length != 0) {
@@ -219,7 +236,7 @@ $(document).ready(function(){
 					if (first.length != 0)
 						selectSuggestion(first);
 				}
-			} else if (e.which == 38) { // if up arrow
+			} else if (e.which == 38) { // Up Arrow Keycode
 				e.preventDefault();
 				var prev = (selected).prev('.suggestion');
 				if (prev.length != 0) {
@@ -229,20 +246,23 @@ $(document).ready(function(){
 					if (last.length != 0)
 						selectSuggestion(last);
 				}
+			} else if (e.which == 8) { // Backspace Keycode
+				if ($('#commandField').val() == '') {
+					suggestToUser(getCommandSuggestions());
+				}
 			}
 		}
 	});
 	
 	// On Click
-	$('.suggestion').click(function(e) {
-		$('.suggestion').removeClass('selected')
-		$(this).closest('.suggestion').addClass('selected');
+	$('#suggestions').on('click', '.suggestion', function(e) {
+		selectSuggestion($(this));
 		onUserChoice();
 	});
 
 	// On keyup
 	$('#commandField').keyup(function(e) {
-		if (e.which == 13) { // If Enter key
+		if (e.which == 13) { // Enter Keycode
 			onUserChoice();
 		}
 	});

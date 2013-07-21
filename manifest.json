@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
 
-  "name": "WebCommand",
+  "name": "ChromeCmd",
   "description": "Control your browser quickier than ever with only your keyboard",
   "version": "0.1",
 
@@ -22,8 +22,17 @@
     "http://*/*",
     "https://*/*"
   ],
+
+  "icons": {
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
   
   "browser_action": {
+    "default_icon": {
+      "19": "images/icon19.png",
+      "38": "images/icon38.png"
+    },
     "default_title": "WebCommand",
     "default_popup": "popup.html"
   }

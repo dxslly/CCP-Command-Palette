@@ -1,72 +1,37 @@
 body {
 	background-color: transparent;
-	-webkit-touch-callout: none;
 	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: moz-none;
-	-ms-user-select: none;
 	user-select: none;
 }
 
-/* SCROLL BAR */
-/* Turn on a 16x16 scrollbar */
+/* Let's get this party started */
 ::-webkit-scrollbar {
-    width: 16px;
-    height: 16px;
+    width: 12px;
 }
-
-/* Turn on single button up on top, and down on bottom */
-::-webkit-scrollbar-button:start:decrement,
-::-webkit-scrollbar-button:end:increment {
-    display: block;
+ 
+/* Track */
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
 }
-
-/* Turn off the down area up on top, and up area on bottom */
-::-webkit-scrollbar-button:vertical:start:increment,
-::-webkit-scrollbar-button:vertical:end:decrement {
-    display: none;
-}
-
-/* Place The scroll down button at the bottom */
-::-webkit-scrollbar-button:end:increment {
-    background-image: url(../images/scroll_cntrl_dwn.png);
-}
-
-/* Place The scroll up button at the up */
-::-webkit-scrollbar-button:start:decrement {
-    background-image: url(../images/scroll_cntrl_up.png);
-}
-
-/* Top area above thumb and below up button */
-::-webkit-scrollbar-track-piece:vertical:start {
-    background-image: url(../images/scroll_gutter_top.png), url(../images/scroll_gutter_mid.png);
-    background-repeat: no-repeat, repeat-y;
-}
-
-/* Bottom area below thumb and down button */
-::-webkit-scrollbar-track-piece:vertical:end {
-    background-image: url(../images/scroll_gutter_btm.png), url(../images/scroll_gutter_mid.png);
-    background-repeat: no-repeat, repeat-y;
-    background-position: bottom left, 0 0;
-}
-
-/* The thumb itself */
-::-webkit-scrollbar-thumb:vertical {
-    height: 56px;
-    -webkit-border-image: url(../images/scroll_thumb.png) 8 0 8 0 stretch stretch;
-    border-width: 8 0 8 0;
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #ececec; 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }
 
 #container {
 	min-width: 500px;
+	font-family: 'Open Sans', arial, sans-serif;
 }
 
 #commandBar {
 	background-color: #ccc;
 	padding: 4px 12px 4px 12px;
-	border-top-left-radius: 2px;
-	border-top-right-radius: 2px;
-	border-bottom: 2px solid #8B8B8B;
+	border-bottom: 1px solid #8B8B8B;
+	position: relative;
+	z-index: 10;
+	box-shadow: 0px 5px 5px rgba(50, 50, 50, 0.5);
 }
 
 #commandBar input {
@@ -75,17 +40,20 @@ body {
 	height: 30px;
 	margin: 0px;
 	background-color: #fff;
-	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
-    box-sizing: border-box;         /* Opera/IE 8+ */
+	outline-color: orange;
+    box-sizing: border-box;
+    box-shadow: 
+      inset 0 0 8px  rgba(0,0,0,0.1),
+            0 0 16px rgba(0,0,0,0.1); 
 }
 
 #suggestions {
 	position: relative;
+	z-index: 5;
 	font-size: 16px;
-	font-family: Arial, Helvetica, sans-serif;
-	max-height: 245px;
+	max-height: 252px;
 	overflow-y: scroll;
+	background-color: rgb(236, 236, 236);
 }
 
 .suggestion {
@@ -93,25 +61,33 @@ body {
 	display: block;
 	white-space: nowrap;
 	text-align: left;
-	vertical-align: center;
 	padding: 9px 14px 9px 14px;
+	border-top: 1px solid #FFF;
 	border-bottom: 1px solid #aaa;
+	text-shadow: rgba(0, 0, 0, 1) 1px 1px 1px;
 }
 
 .suggestion:hover {
-	background: #a9e4f7;
-	background: -moz-linear-gradient(top,  #a9e4f7 0%, #0fb4e7 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a9e4f7), color-stop(100%,#0fb4e7));
-	background: -webkit-linear-gradient(top,  #a9e4f7 0%,#0fb4e7 100%);
-	background: -o-linear-gradient(top,  #a9e4f7 0%,#0fb4e7 100%);
-	background: -ms-linear-gradient(top,  #a9e4f7 0%,#0fb4e7 100%);
-	background: linear-gradient(to bottom,  #a9e4f7 0%,#0fb4e7 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a9e4f7', endColorstr='#0fb4e7',GradientType=0 );
+	background: #fff;
+	border-top: 1px solid #fff;
+	color: #1c5ac4;
 	cursor: pointer;
+	text-shadow: none;
 }
 
 .suggestion span {
 	display: inline-block;
+}
+
+.selected {
+	color: #fff;
+	background: #5080d8;
+	border-top: 1px solid #5080d8;
+	/*background: linear-gradient(to bottom,  rgba(255,197,120,1) 0%,rgba(251,157,35,1) 100%);*/
+}
+
+.selected .caption {
+
 }
 
 .icon {
@@ -120,34 +96,23 @@ body {
 	vertical-align: middle;
 }
 
-.caption{
+.caption {
+	text-shadow: rgba(0, 0, 0, 0.2) 0px -1px 0px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	max-width: 478px;
 }
 
 .shortcut {
+	text-shadow: none;
 	margin-left: 20px;
 	float: right;
-	color: black;
 }
 
-.key {
+/*.key {
 	border-radius: 4px;
 	border-style: outset;
 	border: 1px solid #aaa;
 	background: #fafafa;
 	padding: 0px 3px 1px 3px;
-}
-
-.selected {
-	color: white;
-	background: rgb(255,197,120);
-	background: -moz-linear-gradient(top,  rgba(255,197,120,1) 0%, rgba(251,157,35,1) 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,197,120,1)), color-stop(100%,rgba(251,157,35,1)));
-	background: -webkit-linear-gradient(top,  rgba(255,197,120,1) 0%,rgba(251,157,35,1) 100%);
-	background: -o-linear-gradient(top,  rgba(255,197,120,1) 0%,rgba(251,157,35,1) 100%);
-	background: -ms-linear-gradient(top,  rgba(255,197,120,1) 0%,rgba(251,157,35,1) 100%);
-	background: linear-gradient(to bottom,  rgba(255,197,120,1) 0%,rgba(251,157,35,1) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffc578', endColorstr='#fb9d23',GradientType=0 );
-}
+}*/
