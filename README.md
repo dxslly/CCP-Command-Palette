@@ -9,7 +9,7 @@ do these tasks without memorize every shortcut.
 
 2) Begin typing what you would like to do.
 
-Don't worry about typing everything perfectly.  WebCommand uses fuzzy searching so using only a few character is often
+Don't worry about typing everything perfectly.  WebCommand uses fuzzy searching so using only a few characters is often
 enough to find the command you are looking for.
 
 ie. Say you would like to clear your web cache.  Press Ctrl+Shift+P to open WebCommand then type "cache" and press enter.
