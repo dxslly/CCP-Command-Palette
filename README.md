@@ -1,10 +1,10 @@
-#Chrome Command Pallete
+#Chrome Command Palette
 
-Do you love Sublime's Command Pallete?  Of course you do!
+Do you love Sublime's Command Palette?  Of course you do!
 Chrome Command Pallete, or CCP for short, is a chrome extention that allows you to easily accomplish many tasks using
 only a keyboard.  Forget memorizing every shortcut, learn Chrome Command Pallete.
 
-##How to use Chrome Command Pallete
+##How to use Chrome Command Palette
 
 1) Open CCP by pressing <UNDEDIRMINED KEY COMBINATION>
 
