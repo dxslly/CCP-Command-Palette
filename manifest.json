@@ -1,18 +1,23 @@
 {
   "manifest_version": 2,
-
-  "name": "ChromeCmd",
-  "description": "Control your browser quickier than ever with only your keyboard",
+  "name": "Chrome Command Palette",
+  "short_name": "CCP",
   "version": "0.1",
+
+  "description": "Control your browser quickier than ever with only your keyboard",
+  "icons": {
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+
+  "author": "David Samuelson",
 
   "commands": {
     "_execute_browser_action": {
       "suggested_key": {
-        "windows": "Ctrl+Shift+P",
-        "mac": "Command+Shift+P",
-        "linux": "Ctrl+Shift+P"
-        },
-      "description": "Toggle WebCommand"
+        "default": "Ctrl+Shift+P",
+        "mac": "MacCtrl+Shift+P"
+      }
     }
   },
 
@@ -23,10 +28,6 @@
     "https://*/*"
   ],
 
-  "icons": {
-    "48": "images/icon48.png",
-    "128": "images/icon128.png"
-  },
   
   "browser_action": {
     "default_icon": {

@@ -148,8 +148,9 @@ function populateSuggestions() {
 				if (shortcutKeys) {
 					for (var i = 0; i < shortcutKeys.length; i++) {
 						$(shortcutElement).append($('<span>').text(shortcutKeys[i]).addClass('key'));
-						// if (i != shortcutKeys.length - 1)
-						// 	$(shortcutElement).append('+');
+						if (_os != OS.mac)
+							if (i != shortcutKeys.length - 1)
+								$(shortcutElement).append('+');
 					};
 					suggestion.append(shortcutElement);
 				}

@@ -13,10 +13,8 @@
 
 _suggestions = [
 	{ 'caption': 'About', 'command': 'openNewTab', 'args': {'url': 'about.html'} },
-	{ 'caption': 'Browser Data: Delete Cache - NONFUNCITONAL', 'command': 'removeBrowsingData', 'args': {'dataToRemove': {'cache': true} },'shortcut': {'windows': ['Ctrl','Shift','Delete']} },
+	{ 'caption': 'Browser Data: Clear Cache', 'command': 'removeBrowsingData', 'args': {'dataToRemove': {'cache': true}, 'options': {} }, 'closeOnComplete': true, 'shortcut': {'windows': ['Ctrl','Shift','Delete']} },
 	{ 'caption': 'Browser Data: Delete History', 'command': 'suggestHistory', 'shortcut': {'windows': ['Ctrl','Shift','Delete'], 'mac': ['⌘','⇧','⌫']} },
-	{ 'caption': "Debug: Echo Value", 'command': 'askForEchoValue' },
-	{ 'caption': 'Debug: Open WebCommand in Tab', 'command': 'openNewTab', 'args': {'url': 'popup.html'} },
 	{ 'caption': 'Goto: Downloads', 'command': 'openNewTab', 'args': {'url': 'chrome://downloads/'}, 'shortcut': {'windows': ['Ctrl','Shift','J'], 'mac': ['⌘','⇧','J']} },
 	{ 'caption': 'Goto: Extentions', 'command': 'openNewTab', 'args': {'url': 'chrome://extensions/'} },
 	{ 'caption': 'Goto: History', 'command': 'openNewTab', 'args': {'url': 'chrome://history/'}, 'shortcut': {'windows': ['Ctrl','H'], 'mac': ['⌘','H']} },
@@ -38,8 +36,6 @@ _suggestions = [
 
 function suggestClosedTab() {
 	var suggestions = [];
-
-
 }
 
 function suggestHistory() {
