@@ -6,7 +6,7 @@ only a keyboard.  Forget memorizing every shortcut, learn Chrome Command Pallete
 
 ##How to use Chrome Command Palette
 
-1) Open CCP by pressing <UNDEDIRMINED KEY COMBINATION>
+1) Open CCP by pressing Ctrl+Shift+P
 
 2) Begin typing.
 
