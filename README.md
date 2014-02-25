@@ -1,10 +1,10 @@
-#Chrome Command Palette
+#CCP Command Palette
 
-Do you love Sublime's Command Palette? Of course you do! Chrome Command Palette, or CCP for short, is a chrome extension that allows you to easily accomplish many tasks using only a keyboard. Forget memorizing every shortcut, learn Chrome Command Palette.
+Do you love Sublime's Command Palette? Of course you do! CCP Command Palette, or CCP for short, is a chrome extension that allows you to easily accomplish many tasks using only a keyboard.
 
 NOW IN THE [CHROME STORE](https://chrome.google.com/webstore/detail/chrome-command-palette/cofhcenpbdpcjghambdchdmdlapaiddh)
 
-##How to use Chrome Command Palette
+##How to use CCP Command Palette
 
 1) Open CCP by pressing Ctrl+Shift+P
 
