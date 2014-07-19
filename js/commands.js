@@ -19,6 +19,7 @@ _suggestions = [
 	{ 'caption': 'Goto: Extentions', 'command': 'openNewTab', 'args': {'url': 'chrome://extensions/'} },
 	{ 'caption': 'Goto: History', 'command': 'openNewTab', 'args': {'url': 'chrome://history/'}, 'shortcut': {'windows': ['Ctrl','H'], 'mac': ['⌘','H']} },
 	{ 'caption': 'Goto: Settings', 'command': 'openNewTab', 'args': {'url': 'chrome://settings/'} },
+	{ 'caption': 'Goto: Keyboard Shortcuts Setting', 'command': 'openNewTab', 'args': {'url': 'chrome://extensions/configureCommands'} },
 	{ 'caption': 'Page: Print', 'command': 'printPage', 'shortcut': {'windows': ['Ctrl','P'], 'mac': ['⌘','P']} },
 	{ 'caption': 'Tab: Close Current', 'command': 'closeCurrentTab', 'shortcut': {'windows': ['Ctrl','W'], 'mac': ['⌘','W']} },
 	{ 'caption': 'Tab: Close All Others', 'command': 'closeAllOtherTabs' },
