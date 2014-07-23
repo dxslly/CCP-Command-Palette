@@ -17,6 +17,7 @@ _suggestions = [
 	{ 'caption': 'Browser Data: Delete History', 'command': 'suggestHistory', 'shortcut': {'windows': ['Ctrl','Shift','Delete'], 'mac': ['⌘','⇧','⌫']} },
 	{ 'caption': 'Goto: Downloads', 'command': 'openNewTab', 'args': {'url': 'chrome://downloads/'}, 'shortcut': {'windows': ['Ctrl','Shift','J'], 'mac': ['⌘','⇧','J']} },
 	{ 'caption': 'Goto: Extentions', 'command': 'openNewTab', 'args': {'url': 'chrome://extensions/'} },
+	{ 'caption': 'Goto: Bookmarks', 'command': 'openNewTab', 'args': {'url': 'chrome://bookmarks/'} },
 	{ 'caption': 'Goto: History', 'command': 'openNewTab', 'args': {'url': 'chrome://history/'}, 'shortcut': {'windows': ['Ctrl','H'], 'mac': ['⌘','H']} },
 	{ 'caption': 'Goto: Settings', 'command': 'openNewTab', 'args': {'url': 'chrome://settings/'} },
 	{ 'caption': 'Page: Print', 'command': 'printPage', 'shortcut': {'windows': ['Ctrl','P'], 'mac': ['⌘','P']} },
