@@ -1,31 +1,36 @@
-body {
+/* Let's get this party started */
+#ccpHUD ::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+/* Track */
+#ccpHUD ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+}
+ 
+/* Handle */
+#ccpHUD ::-webkit-scrollbar-thumb {
+    background: #ececec; 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+
+#ccpHUD {
+	position: fixed;
+	margin-right: auto;
+	margin-left: auto;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 2999999999;
+	min-width: 500px;
+	max-width: 50%;
+	font-family: 'Open Sans', arial, sans-serif;
 	background-color: transparent;
 	-webkit-user-select: none;
 	user-select: none;
 }
 
-/* Let's get this party started */
-::-webkit-scrollbar {
-    width: 12px;
-}
- 
-/* Track */
-::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
-}
- 
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background: #ececec; 
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
-}
-
-#container {
-	min-width: 500px;
-	font-family: 'Open Sans', arial, sans-serif;
-}
-
-#commandBar {
+#ccpHUD #commandBar {
 	background-color: #ccc;
 	padding: 4px 12px 4px 12px;
 	border-bottom: 1px solid #8B8B8B;
@@ -34,7 +39,7 @@ body {
 	box-shadow: 0px 5px 5px rgba(50, 50, 50, 0.5);
 }
 
-#commandBar input {
+#ccpHUD #commandBar input {
 	width: 100%;
 	padding: 5px;
 	height: 30px;
@@ -47,7 +52,7 @@ body {
             0 0 16px rgba(0,0,0,0.1); 
 }
 
-#suggestions {
+#ccpHUD #suggestions {
 	position: relative;
 	z-index: 5;
 	font-size: 16px;
@@ -56,7 +61,7 @@ body {
 	background-color: rgb(236, 236, 236);
 }
 
-.suggestion {
+#ccpHUD #suggestions .suggestion {
 	position: relative;
 	display: block;
 	white-space: nowrap;
@@ -67,7 +72,7 @@ body {
 	text-shadow: rgba(0, 0, 0, 1) 1px 1px 1px;
 }
 
-.suggestion:hover {
+#ccpHUD #suggestions .suggestion:hover {
 	background: #fff;
 	border-top: 1px solid #fff;
 	color: #1c5ac4;
@@ -75,35 +80,35 @@ body {
 	text-shadow: none;
 }
 
-.suggestion span {
+#ccpHUD #suggestions .suggestion span {
 	display: inline-block;
 }
 
-.selected {
+#ccpHUD #suggestions .selected {
 	color: #fff;
 	background: #5080d8;
 	border-top: 1px solid #5080d8;
 	/*background: linear-gradient(to bottom,  rgba(255,197,120,1) 0%,rgba(251,157,35,1) 100%);*/
 }
 
-.selected .caption {
+#ccpHUD .selected .caption {
 
 }
 
-.icon {
+#ccpHUD .icon {
 	margin-right: 9px;
 	width: 16px;
 	vertical-align: middle;
 }
 
-.caption {
+#ccpHUD .caption {
 	text-shadow: rgba(0, 0, 0, 0.2) 0px -1px 0px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	max-width: 478px;
 }
 
-.shortcut {
+#ccpHUD .shortcut {
 	text-shadow: none;
 	margin-left: 20px;
 	float: right;
