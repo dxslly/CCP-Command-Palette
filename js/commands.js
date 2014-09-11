@@ -1,13 +1,33 @@
 var defaultCommands = [
   {
+    'caption': 'Goto: Chrome Bookmarks',
+    'command': 'OpenTab',
+    'args': { 'url': 'chrome://bookmarks/', 'isLocal': false }
+  },
+  {
+    'caption': 'Goto: Chrome Downloads',
+    'command': 'OpenTab',
+    'args': { 'url': 'chrome://downloads/', 'isLocal': false }
+  },
+  {
+    'caption': 'Goto: Chrome Extensions',
+    'command': 'OpenTab',
+    'args': { 'url': 'chrome://extensions/', 'isLocal': false }
+  },
+  {
+    'caption': 'Goto: Chrome History',
+    'command': 'OpenTab',
+    'args': { 'url': 'chrome://history/', 'isLocal': false }
+  },
+  {
     'caption': 'Preferences: CCP Settings',
     'command': 'OpenTab',
     'args': { 'url': 'settings.html', 'isLocal': true }
   },
   {
-    'caption': 'Goto: Extensions',
+    'caption': 'Preferences: Chrome Settings',
     'command': 'OpenTab',
-    'args': { 'url': 'chrome://extensions/', 'isLocal': false }
+    'args': { 'url': 'chrome://history/', 'isLocal': false }
   }
 ];
 
