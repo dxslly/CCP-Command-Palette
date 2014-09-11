@@ -1,8 +1,11 @@
-var hud = (function($, Handlebars) {
+var hud = (function($, Handlebars, Fuse) {
   /* Member Vars */
   var isCreated = false;
   var isVisable = false;
-  var defaultSuggestions = [];
+  var allSuggestions = [];
+  var currentSuggestions = [];
+  var selectedSuggestionIndex = 0;
+  var fuse;
 
   /* Cached Divs */
   var ccpHUDDiv;
@@ -22,7 +25,7 @@ var hud = (function($, Handlebars) {
   }];
 
   function initialize() {
-    defaultSuggestions = DEFAULT_SUGGESTIONS;
+    allSuggestions = DEFAULT_SUGGESTIONS;
     templateSuggestion = Handlebars.compile(TEMPLATE_SOURCE_SUGGESTIONS);
 
     $(document).ready(function() {
@@ -34,21 +37,20 @@ var hud = (function($, Handlebars) {
           if (isVisable) {
             hide();
           } else {
-            show();
+            chrome.runtime.sendMessage({'action': 'GetDefaultSuggestions'}, function(response) {
+              presentSuggestions(response);
+            });
           }
         }
 
         // Submit Command
-        if (13 === event.which && isVisable) {
-          runCommand(defaultSuggestions[0]);
+        if (isVisable && (13 === event.which) && (currentSuggestions.length > 0)) {
+          runCommand(currentSuggestions[0]);
           hide();
         }
+
       });
     });
-  }
-
-  function setDefaultSuggestions(suggestions) {
-    defaultSuggestions = suggestions;
   }
 
   function create() {
@@ -62,7 +64,20 @@ var hud = (function($, Handlebars) {
     suggestionsDiv = $('#suggestions', ccpHUDDiv);
     commandField = $('#commandField', ccpHUDDiv);
 
+    // bind update suggestions on suggestions change 
+    $(commandField).on('input', handleCommandFieldChanged);
+
     isCreated = true;
+  }
+
+  function handleCommandFieldChanged() {
+    var fieldText = $(commandField).val();
+    if (fieldText === '') {
+      updateSuggestions(allSuggestions);
+    } else {
+      var results = fuse.search(fieldText);
+      updateSuggestions(results);
+    }
   }
 
   function hide() {
@@ -81,20 +96,31 @@ var hud = (function($, Handlebars) {
       return;
     }
 
-    if (!isCreated) {
+    if (!isCreated) { 
       create();
     }
     
     $(ccpHUDDiv).show();
     isVisable = true;
     $(commandField).focus();
-    presentSuggestions(defaultSuggestions);
   }
 
   function presentSuggestions(suggestions) {
-    suggestions = suggestions || defaultSuggestions || [];
+    console.log('presentSuggestions');
+    console.log(suggestions);
+    allSuggestions = suggestions;                  // Update the list of all suggestions
+    var fuseOptions = { keys: ['caption'] };      // Use the caption as the fuzzy search key
+    fuse = new Fuse(allSuggestions, fuseOptions); // Create a new fuse object of the new list of suggestions
+    show();
+    $(commandField).val('');
+    updateSuggestions(allSuggestions);
+  }
 
-    suggestions.forEach(function(suggestion, index, array) {
+  function updateSuggestions(suggestions) {
+    currentSuggestions = suggestions;
+    selectedSuggestionIndex = 0;
+    $(suggestionsDiv).empty();
+    currentSuggestions.forEach(function(suggestion, index, array) {
       var suggestionString = templateSuggestion(suggestion);
       $(suggestionsDiv).append(suggestionString);
     });
@@ -116,20 +142,14 @@ var hud = (function($, Handlebars) {
 
   var exports = {
     'initialize': initialize,
-    'setDefaultSuggestions': setDefaultSuggestions,
     'presentSuggestions': presentSuggestions
   };
 
   return exports;
-})($, Handlebars);
-
+})($, Handlebars, Fuse);
 
 $(document).ready(function() {
   hud.initialize();
-
-  chrome.runtime.sendMessage({'action': 'GetDefaultSuggestions'}, function(response) {
-    hud.setDefaultSuggestions(response);
-  });
 
   chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     if ('PresentSuggestions' === message.action) {

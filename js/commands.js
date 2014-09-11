@@ -3,6 +3,11 @@ var defaultCommands = [
     'caption': 'Preferences: CCP Settings',
     'command': 'OpenTab',
     'args': { 'url': 'settings.html', 'isLocal': true }
+  },
+  {
+    'caption': 'Goto: Extensions',
+    'command': 'OpenTab',
+    'args': { 'url': 'chrome://extensions/', 'isLocal': false }
   }
 ];
 

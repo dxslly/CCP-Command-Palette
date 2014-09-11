@@ -15,7 +15,11 @@
   "permissions": [],
 
   "background": {
-    "scripts": ["js/config.js", "js/commands.js", "js/background.js"],
+    "scripts": [
+      "js/config.js",
+      "js/commands.js",
+      "js/background.js"
+    ],
     "persistant": false
   },
 
@@ -24,7 +28,12 @@
     {
       "matches": ["http://*/*", "https://*/*"],
       "css": ["css/style.css"],
-      "js": ["js/config.js", "js/vendor/handlebars.min.js", "js/vendor/jquery.min.js", "js/hud.js"]
+      "js": [
+        "js/config.js",
+        "js/vendor/fuse.min.js",
+        "js/vendor/handlebars.min.js",
+        "js/vendor/jquery.min.js",
+        "js/hud.js"]
     }
   ]
 }
